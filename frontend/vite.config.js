@@ -1,17 +1,17 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
 
+// https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  // shared settings for any port
-  resolve: {
-    alias: {
-      '@': new URL('./src', import.meta.url).pathname
-    }
-  },
   server: {
-    // default port: 5173 (overridden by --port)
-    strictPort: true,   // fail if port is in use
-    open: true          // open browser on start
+    port: 5173,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:9000',
+        changeOrigin: true,
+        secure: false
+      }
+    }
   }
-});
+})
